@@ -19,6 +19,17 @@ app.get('/', (req, res) => {
 
 client.connect(err => {
     const collection = client.db("organicProducts").collection("products");
+
+    // get data from server to ui
+    app.get('/products',(req, res) =>{
+        collection.find({})
+        .toArray ((err, documents) =>{
+            res.send(documents);
+        })
+    })
+
+    // post from ui
+
     app.post("/addProducts", (req, res) => {
        const product = req.body;
        collection.insertOne(product)

@@ -1,18 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>Post data to mongo server</h1>
     <form action="/addProducts" method="post">
-        <input type="text" placeholder="name" name= "name">
-        <input type="text" placeholder="price" name = "price">
+        <input type="text" placeholder="name" name="name">
+        <input type="text" placeholder="price" name="price">
         <input type="text" placeholder="quantity" name="quantity">
         <button type="submit">Add User</button>
     </form>
+
+    <div id="productsList">
+
+    </div>
+
+    <script>
+        function loadProducts() {
+            fetch('/products')
+                .then(res => res.json())
+                .then(products => {
+                    const container = document.getElementById("productsList");
+                    products.forEach(product => {
+                        const list = document.createElement("li");
+                        list.innerHTML = `${product.name}-- Price: ${product.price} Quantity: ${product.quantity}`
+                        container.appendChild(list);
+                    });
+                })
+        }
+        loadProducts();
+    </script>
 </body>
+
 </html>
