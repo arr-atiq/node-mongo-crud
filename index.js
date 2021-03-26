@@ -38,7 +38,7 @@ client.connect(err => {
         })
     })
 
-    // modified data from ui to server
+    // modified data from ui to server-5
 
     app.patch('/modified/:id', (req, res) =>{
         collection.updateOne({_id: ObjectId(req.params.id)},
@@ -46,7 +46,8 @@ client.connect(err => {
             $set: {price: req.body.price, quantity: req.body.quantity}
         })
         .then(result=>{
-            console.log(result);
+            // console.log(result);
+            res.send(result.modifiedCount> 0);
         })
     })
 
@@ -56,17 +57,20 @@ client.connect(err => {
        const product = req.body;
        collection.insertOne(product)
        .then(result =>{
-           res.redirect('/');
+        //    console.log("data added successfully");
+        res.redirect('/');
+        //    res.send('successfully added user!');
        })
     })
 
     // delete data from ui to server-3
 
     app.delete('/delete/:id', (req, res) =>{
-        console.log(req.params.id);
+        // console.log(req.params.id);
         collection.deleteOne({_id: ObjectId(req.params.id)})
         .then(result=>{
-            console.log(result);
+            // console.log(result);
+            res.send(result.deletedCount > 0);
         })
     })
 });
