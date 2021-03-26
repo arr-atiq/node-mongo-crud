@@ -33,7 +33,7 @@
                         const list = document.createElement("li");
                         list.innerHTML = `${product.name}-- Price: ${product.price} Quantity: ${product.quantity}
                         <button onclick="updateUser('${product._id}')">Update</button>
-                        <button onclick="deleteUser('${product._id}')">Add User</button>
+                        <button onclick="deleteUser('${product._id}')">Delete</button>
                         `;
                         container.appendChild(list);
                     });
@@ -51,8 +51,23 @@
                 Price: <input type="text" value = ${data.price} id = "price">
                 <br>
                 Quantity: <input type="text" value = ${data.quantity} id = "quantity">
-                <button> Update </buttongit >
+                <button onclick="modifiedUser('${data._id}')">Submit</button>
                 `
+            })
+        }
+
+        function modifiedUser(id){
+            const price = document.getElementById('price').value;
+            const quantity = document.getElementById('quantity').value;
+            const product = {id, price, quantity};
+            fetch(`/modified/${id}`,{
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(product)
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("updated user");
             })
         }
 

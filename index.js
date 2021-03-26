@@ -38,6 +38,18 @@ client.connect(err => {
         })
     })
 
+    // modified data from ui to server
+
+    app.patch('/modified/:id', (req, res) =>{
+        collection.updateOne({_id: ObjectId(req.params.id)},
+        {
+            $set: {price: req.body.price, quantity: req.body.quantity}
+        })
+        .then(result=>{
+            console.log(result);
+        })
+    })
+
     // post data from ui to server-2
 
     app.post("/addProducts", (req, res) => {
