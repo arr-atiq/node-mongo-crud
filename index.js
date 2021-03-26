@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 client.connect(err => {
     const collection = client.db("organicProducts").collection("products");
 
-    // get data from server to ui
+    // get data from server to ui-1
     app.get('/products',(req, res) =>{
         collection.find({})
         .toArray ((err, documents) =>{
@@ -29,7 +29,16 @@ client.connect(err => {
         })
     })
 
-    // post data from ui to server
+    // get single data from server-4
+
+    app.get('/update/:id', (req, res)=>{
+        collection.find({_id: ObjectId(req.params.id)})
+        .toArray((err, documents) =>{
+            res.send(documents[0]);
+        })
+    })
+
+    // post data from ui to server-2
 
     app.post("/addProducts", (req, res) => {
        const product = req.body;
@@ -40,7 +49,7 @@ client.connect(err => {
        })
     })
 
-    // delete data from ui to server
+    // delete data from ui to server-3
 
     app.delete('/delete/:id', (req, res) =>{
         console.log(req.params.id);
