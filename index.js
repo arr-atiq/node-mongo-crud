@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-
-// const password = "8nzy#u4Uby75XdQ";
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
+
+
 const uri = "mongodb+srv://organicUser:user12345@cluster0.skqkk.mongodb.net/organicProducts?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -28,7 +29,7 @@ client.connect(err => {
         })
     })
 
-    // post from ui
+    // post data from ui to server
 
     app.post("/addProducts", (req, res) => {
        const product = req.body;
@@ -37,6 +38,16 @@ client.connect(err => {
            console.log("data added successfully");
            res.send('successfully added user!');
        })
+    })
+
+    // delete data from ui to server
+
+    app.delete('/delete/:id', (req, res) =>{
+        console.log(req.params.id);
+        collection.deleteOne({_id: ObjectId(req.params.id)})
+        .then(result=>{
+            console.log(result);
+        })
     })
 });
 

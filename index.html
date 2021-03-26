@@ -16,6 +16,7 @@
         <input type="text" placeholder="quantity" name="quantity">
         <button type="submit">Add User</button>
     </form>
+</br>
 
     <div id="productsList">
 
@@ -26,16 +27,28 @@
             fetch('/products')
                 .then(res => res.json())
                 .then(products => {
+                    console.log(products);
                     const container = document.getElementById("productsList");
                     products.forEach(product => {
                         const list = document.createElement("li");
-                        list.innerHTML = `${product.name}-- Price: ${product.price} Quantity: ${product.quantity}`
+                        list.innerHTML = `${product.name}-- Price: ${product.price} Quantity: ${product.quantity}
+                        <button onclick="deleteUser('${product._id}')">Add User</button>
+                        `;
                         container.appendChild(list);
                     });
                 })
         }
         loadProducts();
+        function deleteUser(id){
+            console.log(id);
+            fetch(`/delete/${id}`,{
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(result =>{
+                console.log("deleted successfully");
+            })
+        }
     </script>
 </body>
-
 </html>
